@@ -1,0 +1,284 @@
+<FirstScreen>:
+    MDFloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.7, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        MDLabel:
+            text: "0"
+            font_style: "H6"
+            font_size: "70sp"
+            theme_text_color: "Custom"
+            text_color: 1, 1, 0, 1
+            size_hint: (.3, .3)
+            pos_hint: {'x':.70, 'y':.77}
+
+        Image:
+            source: 'star.png'
+            size_hint: (.15, .15)
+            pos_hint: {'x':.80, 'y':.85}
+
+        Image:
+            source: 'monster.png'
+            size_hint: (.15, .15)
+            pos_hint: {'x':.80, 'y':.65}
+
+        MDLabel:
+            text: 'Меню'
+            halign: "center"
+            font_style: "H6"
+            font_size: "40sp"
+            size_hint: (.5, .25)
+            pos_hint: {'x':.25, 'y':.60}
+
+        MDFillRoundFlatButton:
+            text: 'Учим слоги'
+            font_style: "H6"
+            font_size: "30sp"
+            on_press: root.manager.current = 'second'
+            size_hint: (.5, .15)
+            pos_hint: {'x':.15, 'y':.45}
+
+        MDFillRoundFlatButton:
+            text: 'Играем со словами'
+            font_style: "H6"
+            font_size: "30sp"
+            on_press: root.manager.current = 'play'
+            size_hint: (.5, .15)
+            pos_hint: {'x':.15, 'y':.25}
+
+        MDFillRoundFlatButton:
+            text: 'Составляем текст \n и предложения'
+            font_style: "H6"
+            font_size: "30sp"
+            on_press: root.manager.current = 'sentens'
+            size_hint: (.5, .15)
+            pos_hint: {'x':.15, 'y':.05}
+
+<SyllableScreen1>:
+    MDFloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.7, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+
+<SyllableScreen2>:
+    MDBoxLayout:
+        orientation:"vertical"
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.7, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+
+<Trial_versionScreen>:
+    syllable: ''
+
+    MDFloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.7, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        ImageButton:
+            source: 'back.png'
+            on_press: root.manager.current = 'with_hooks'
+            size_hint: (.15, .15)
+            pos_hint: {'x': 0.05, "y": 0.85}
+
+        Button:
+            text: root.syllable
+            halign: 'center'
+            font_size: '60sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            size_hint: (.25,.15)
+            background_color: (0.5, 0, 1, 1)
+
+        Image:
+            source: 'finger.png'
+            size_hint: (.3, .3)
+            pos_hint: {'x':.35, 'y':.2}
+
+
+<SecondScreen>:
+    MDFloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.7, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        ScrollView:
+            pos_hint: {"top": 0.95, "center_x": 0.5}
+            size_hint: 0.9, 0.85
+            do_scroll_x: False
+            bar_width: 8
+            bar_color: 1, 1, 1, 0.5
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: "20dp"
+                spacing: "15dp"
+
+                MDFillRoundFlatButton:
+                    text: 'Буквы с "палочками"'
+                    font_style: "H6"
+                    font_size: "24sp"
+                    size_hint_y: None
+                    height: "70dp"
+                    md_bg_color: app.theme_cls.primary_dark
+                    text_color: 1, 1, 1, 1
+                    on_press: root.manager.current = 'with_sticks'
+
+                MDFillRoundFlatButton:
+                    text: 'Буквы с "крючками"'
+                    font_style: "H6"
+                    font_size: "24sp"
+                    size_hint_y: None
+                    height: "70dp"
+                    md_bg_color: app.theme_cls.primary_dark
+                    text_color: 1, 1, 1, 1
+                    on_press: root.manager.current = 'with_hooks'
+
+                MDFillRoundFlatButton:
+                    text: 'Буквы с "перекладинами"'
+                    font_style: "H6"
+                    font_size: "24sp"
+                    size_hint_y: None
+                    height: "70dp"
+                    md_bg_color: app.theme_cls.primary_dark
+                    text_color: 1, 1, 1, 1
+
+                MDFillRoundFlatButton:
+                    text: 'Буквы с "петельками"'
+                    font_style: "H6"
+                    font_size: "24sp"
+                    size_hint_y: None
+                    height: "70dp"
+                    md_bg_color: app.theme_cls.primary_dark
+                    text_color: 1, 1, 1, 1
+
+                MDFillRoundFlatButton:
+                    text: 'Буквы с "двойными элементами"'
+                    font_style: "H6"
+                    font_size: "24sp"
+                    size_hint_y: None
+                    height: "70dp"
+                    md_bg_color: app.theme_cls.primary_dark
+                    text_color: 1, 1, 1, 1
+
+                MDFillRoundFlatButton:
+                    text: 'Особые согласные'
+                    font_style: "H6"
+                    font_size: "24sp"
+                    size_hint_y: None
+                    height: "70dp"
+                    md_bg_color: app.theme_cls.primary_dark
+                    text_color: 1, 1, 1, 1
+
+        ImageButton:
+            source: 'back.png'
+            size_hint: (None, None)
+            size: "50dp", "50dp"
+            pos_hint: {"x": 0.02, "y": 0.02}
+            on_press: root.manager.current = 'first'
+
+
+<PlayScreen>:
+    MDBoxLayout:
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.7, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        orientation: 'vertical'
+        padding: "20dp"
+        spacing: "20dp"
+
+        # Контейнер для основного контента
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint_y: 0.8  # Занимает 80% высоты
+
+            # Сетка для 4 кнопок (2x2)
+            MDGridLayout:
+                cols: 2
+                spacing: "20dp"
+                padding: "20dp"
+                size_hint: 1, 1
+
+                ImageButton:
+                    source: 'run.png'
+                    on_press: root.manager.current = 'with_hooks'
+                    size_hint: (None, None)
+                    size: "150dp", "150dp"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                ImageButton:
+                    source: 'mum.png'
+                    on_press: root.manager.current = 'with_hooks'
+                    size_hint: (None, None)
+                    size: "150dp", "150dp"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                ImageButton:
+                    source: 'cow.png'
+                    on_press: root.manager.current = 'with_hooks'
+                    size_hint: (None, None)
+                    size: "150dp", "150dp"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                ImageButton:
+                    source: 'ellipsis.png'
+                    on_press: root.manager.current = 'with_hooks'
+                    size_hint: (None, None)
+                    size: "150dp", "150dp"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        # Кнопка "Назад" (остаётся на своём месте)
+        ImageButton:
+            source: 'back.png'
+            on_press: root.manager.current = 'first'
+            size_hint: (.15, .15)
+            pos_hint: {'x': 0.05, "y": 0.85}
+
+<SentensScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: "20dp"
+        spacing: "20dp"
+
+        MDLabel:
+            text: "Экран 'Составляем текст \n и предложения'"
+            halign: "center"
+            font_style: "H3"
+
+        ImageButton:
+            source: 'back.png'
+            on_press: root.manager.current = 'first'
+            size_hint: (.15, .15)
+            pos_hint: {'x': 0.05, "y": 0.85}
+<SoundGameScreen>:
+    MDBoxLayout:
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.7, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
