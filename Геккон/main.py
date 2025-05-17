@@ -1,4 +1,5 @@
 from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ListProperty
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivymd.uix.gridlayout import MDGridLayout
@@ -12,12 +13,20 @@ import pygame
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel
+from kivymd.uix.card import MDCard
 from kivy.properties import StringProperty
 import os
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.button import Button
 from kivy.core.audio import SoundLoader
 import random
+
+from kivymd.uix.textfield import MDTextField
+from kivymd.uix.label import MDLabel
+from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.screen import MDScreen
+
 
 Window.size = (480, 650)
 
@@ -284,6 +293,101 @@ class SyllableScreen2(MDScreen):
             trial_screen = self.manager.get_screen('trial_version')
             trial_screen.syllable = syllable
             self.manager.current = 'trial_version'
+
+
+class TextBuildingScreen(MDScreen):
+    images = ListProperty([
+        "2.png", "3.png", "4.png", "5.png", "6.png",
+        "7.png", "8.png", "9.png", "10.png",
+        "13.png", "14.png", "15.png"
+    ])
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.main_layout = MDBoxLayout(
+            orientation='vertical',
+            padding=20,
+            spacing=20
+        )
+
+        # Заголовок
+        self.header_label = MDLabel(
+            text="Задание 1. Разложить серию сюжетных картинок в соответствии с прочитанным текстом.",
+            font_style='H6',
+            halign='center',
+            size_hint_y=0.1
+        )
+
+        # Текст задания в ScrollView
+        self.task_text = (
+            "Три котёнка — чёрный, серый и белый — увидели мышь и бросились за ней! "
+            "Мышь прыгнула в банку с мукой. Котята — за ней! Мышь убежала. "
+            "А из банки вылезли три белых котёнка. Три белых котёнка увидели на дворе лягушку "
+            "и бросились за ней! Лягушка прыгнула в старую самоварную трубу. Котята — за ней! "
+            "Лягушка ускакала, а из трубы вылезли три чёрных котёнка. "
+            "Три чёрных котёнка увидели в пруду рыбу… и бросились за ней! "
+            "Рыба уплыла, а из воды вынырнули три мокрых котёнка. "
+            "Три мокрых котёнка пошли домой. По дороге они обсохли и стали как были: "
+            "чёрный, серый и белый."
+        )
+        self.task_label = MDLabel(
+            text=self.task_text,
+            font_style='Body1',
+            size_hint_y=None,
+            height=300,
+            text_size=(self.width - 40, None),
+            halign='left'
+        )
+        self.scroll_view = ScrollView(size_hint_y=0.4)
+        self.scroll_view.add_widget(self.task_label)
+
+        # Прокручиваемая сетка для изображений
+        self.grid_layout = MDGridLayout(
+            cols=4,
+            spacing=10,
+            padding=10,
+            size_hint_y=None,
+            adaptive_height=True
+        )
+        self.grid_layout.bind(minimum_height=self.grid_layout.setter('height'))
+        self.grid_scroll = ScrollView(size_hint_y=0.5)
+        self.grid_scroll.add_widget(self.grid_layout)
+
+        # Динамически добавляем MDCard с изображениями
+        for image in self.images:
+            card = MDCard(
+                size_hint=(None, None),
+                size=("100dp", "65dp"),
+                elevation=1,
+                orientation='vertical',
+                padding="5dp"
+            )
+            img = Image(
+                source=image,
+                allow_stretch=True,
+                keep_ratio=True
+            )
+            card.add_widget(img)
+            self.grid_layout.add_widget(card)
+
+        self.back_button = ImageButton(
+            source='back.png',
+            size_hint=(None, None),
+            size=("50dp", "50dp"),
+            pos_hint={"x": 0.02, "y": 0.02}
+        )
+        self.back_button.bind(on_press=lambda x: setattr(self.manager, 'current', 'first'))
+
+        # Добавляем виджеты в основной контейнер
+        self.main_layout.add_widget(self.header_label)
+        self.main_layout.add_widget(self.scroll_view)
+        self.main_layout.add_widget(self.grid_scroll)
+        self.main_layout.add_widget(self.back_button)
+
+        # Добавляем основной контейнер на экран
+        self.add_widget(self.main_layout)
+
+
 class ImageButton(ButtonBehavior, Image):
     pass
 
@@ -302,7 +406,59 @@ class Trial_versionScreen(MDScreen):
     syllable = StringProperty('')
 
 class SentensScreen(MDScreen):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        # Основной layout
+        self.layout = MDBoxLayout(orientation='vertical', padding=20, spacing=10)
+
+        # Метка для текста
+        self.text_label = MDLabel(text="Составьте предложение", halign='center', size_hint_y=None, height="48dp")
+
+        # Поле для ввода текста
+        self.text_input = MDTextField(
+            hint_text="Введите текст",
+            size_hint=(1, None),
+            height="48dp"
+        )
+
+        # Кнопка проверки
+        self.check_btn = MDRaisedButton(
+            text="Проверить предложение",
+            size_hint=(None, None),
+            size=("200dp", "48dp"),
+            on_release=self.check_sentence
+        )
+
+        # Кнопка сброса
+        self.reset_btn = MDRaisedButton(
+            text="Сбросить",
+            size_hint=(None, None),
+            size=("200dp", "48dp"),
+            on_release=self.reset_input
+        )
+
+        # Добавляем элементы в layout
+        self.layout.add_widget(self.text_label)
+        self.layout.add_widget(self.text_input)
+        self.layout.add_widget(self.check_btn)
+        self.layout.add_widget(self.reset_btn)
+
+        self.add_widget(self.layout)
+
+    def check_sentence(self, instance):
+        """Функция для проверки введенного предложения"""
+        user_input = self.text_input.text
+        # Простая проверка: просто проверим, есть ли в предложении глаголы или существительные
+        if any(word in user_input for word in ["пошел", "сказал", "видел", "сделал"]):
+            self.text_label.text = "Предложение правильное!"
+        else:
+            self.text_label.text = "Предложение неправильное, попробуйте снова!"
+
+    def reset_input(self, instance):
+        """Функция для сброса поля ввода"""
+        self.text_input.text = ""
+        self.text_label.text = "Составьте предложение"
 
 
 class MyApp(MDApp):
@@ -314,6 +470,7 @@ class MyApp(MDApp):
         sm.add_widget(SentensScreen(name='sentens'))
         sm.add_widget(SyllableScreen1(name='with_sticks'))
         sm.add_widget(SyllableScreen2(name='with_hooks'))
+        sm.add_widget(TextBuildingScreen(name='text_building'))
         sm.add_widget(Trial_versionScreen(name='trial_version'))
         sm.add_widget(SoundGameScreen(name='sound_game'))  # Добавляем экран игры
 

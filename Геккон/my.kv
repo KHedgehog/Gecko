@@ -54,7 +54,7 @@
             text: 'Составляем текст \n и предложения'
             font_style: "H6"
             font_size: "30sp"
-            on_press: root.manager.current = 'sentens'
+            on_press: root.manager.current = 'text_building'
             size_hint: (.5, .15)
             pos_hint: {'x':.15, 'y':.05}
 
@@ -67,8 +67,6 @@
                 pos: self.pos
                 size: self.size
 
-
-
 <SyllableScreen2>:
     MDBoxLayout:
         orientation:"vertical"
@@ -78,8 +76,6 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-
-
 
 <Trial_versionScreen>:
     syllable: ''
@@ -110,7 +106,6 @@
             source: 'finger.png'
             size_hint: (.3, .3)
             pos_hint: {'x':.35, 'y':.2}
-
 
 <SecondScreen>:
     MDFloatLayout:
@@ -198,7 +193,6 @@
             pos_hint: {"x": 0.02, "y": 0.02}
             on_press: root.manager.current = 'first'
 
-
 <PlayScreen>:
     MDBoxLayout:
         canvas.before:
@@ -211,12 +205,10 @@
         padding: "20dp"
         spacing: "20dp"
 
-        # Контейнер для основного контента
         MDBoxLayout:
             orientation: 'vertical'
-            size_hint_y: 0.8  # Занимает 80% высоты
+            size_hint_y: 0.8
 
-            # Сетка для 4 кнопок (2x2)
             MDGridLayout:
                 cols: 2
                 spacing: "20dp"
@@ -251,29 +243,12 @@
                     size: "150dp", "150dp"
                     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-        # Кнопка "Назад" (остаётся на своём месте)
         ImageButton:
             source: 'back.png'
             on_press: root.manager.current = 'first'
             size_hint: (.15, .15)
             pos_hint: {'x': 0.05, "y": 0.85}
 
-<SentensScreen>:
-    MDBoxLayout:
-        orientation: 'vertical'
-        padding: "20dp"
-        spacing: "20dp"
-
-        MDLabel:
-            text: "Экран 'Составляем текст \n и предложения'"
-            halign: "center"
-            font_style: "H3"
-
-        ImageButton:
-            source: 'back.png'
-            on_press: root.manager.current = 'first'
-            size_hint: (.15, .15)
-            pos_hint: {'x': 0.05, "y": 0.85}
 <SoundGameScreen>:
     MDBoxLayout:
         canvas.before:
@@ -282,3 +257,12 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
+
+<TextBuildingScreen>:
+    name: "text_building"
+    canvas.before:
+        Color:
+            rgba: 0.2, 0.7, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
